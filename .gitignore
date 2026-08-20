@@ -1,0 +1,36 @@
+# Secretos — NUNCA subir (viven en /etc/media-app.env, chmod 600)
+.env
+*.env
+run.sh
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Backups
+*.bak
+*.bak_*
+*.bak.*
+
+# --- defensivo (auto) ---
+venv/
+__pycache__/
+*.pyc
+*.bak
+*.bak.*
+*.bak_*
+*.bak-*
+*.backup.*
+*.precobertura.*
+*.do-legacy.DISABLED
+.env
+.env.*
+*.pem
+*.key
+rollback/
+CHANGES.log
+
+# Otros
+graphify-out
