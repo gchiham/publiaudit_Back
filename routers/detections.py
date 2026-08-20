@@ -177,7 +177,7 @@ def comprobante(
                        c.name as client_name
                 FROM advertisements a
                 JOIN campaigns camp ON a.campaign_id = camp.id
-                JOIN tenants c      ON a.tenant_id = c.id
+                JOIN clients c      ON camp.client_id = c.id
                 WHERE a.id = %s AND a.tenant_id = %s
             ''', (ad_id, ctx['tenant_id']))
             ad = cur.fetchone()
