@@ -1,0 +1,66 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Hanken Grotesk', 'Montserrat', Arial, sans-serif;
+        color: #24272D; font-size: 10px; line-height: 1.45; }
+@page {
+  size: A4;
+  margin: 20mm 16mm 26mm 16mm;
+  @bottom-left   { content: element(footer-left); }
+  @bottom-center { content: element(footer-qr); }
+  @bottom-right  { content: "{{ page_word }} " counter(page) " / " counter(pages);
+                    font-size: 8px; color: #4D555F; }
+}
+.footer-left { position: running(footer-left); font-size: 8px; color: #4D555F;
+                 font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+.footer-qr   { position: running(footer-qr); }
+.footer-qr img { width: 12mm; height: 12mm; }
+
+.head { display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #1CC0F9;
+         padding-bottom: 10px; margin-bottom: 10px; }
+.logo { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; }
+.logo-fallback { display: flex; align-items: center; justify-content: center;
+                   font-family: 'Montserrat', Arial, sans-serif; font-weight: 700; font-size: 18px;
+                   color: #1CC0F9; background: #F6F8FA; border: 1px solid #DCE2E8; }
+.eyebrow { font-size: 8px; text-transform: uppercase; letter-spacing: .08em; color: #4D555F; }
+.client  { font-family: 'Montserrat', Arial, sans-serif; font-weight: 700; font-size: 16px; }
+.issuer  { font-size: 9px; color: #4D555F; }
+
+.campaign-block { margin-bottom: 14px; }
+.campaign-label { display: block; font-size: 8px; text-transform: uppercase; letter-spacing: .08em;
+                    color: #4D555F; margin-bottom: 2px; }
+.campaign-name  { font-family: 'Montserrat', Arial, sans-serif; font-weight: 600; font-size: 13px; }
+.meta { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px; }
+.meta-item { display: flex; flex-direction: column; }
+.meta-k { font-size: 7px; text-transform: uppercase; letter-spacing: .06em; color: #4D555F; }
+.meta-v { font-size: 9.5px; font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+.note      { font-size: 8.5px; color: #4D555F; background: #F6F8FA; border-left: 3px solid #DCE2E8;
+               padding: 5px 8px; margin-bottom: 8px; }
+.note-warn { border-left-color: #1CC0F9; }
+
+.section       { margin-bottom: 14px; }
+.section-title { font-family: 'Montserrat', Arial, sans-serif; font-weight: 700; font-size: 11px;
+                   border-bottom: 1px solid #DCE2E8; padding-bottom: 4px; margin-bottom: 8px; }
+
+.kpis { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.kpi  { border: 1px solid #DCE2E8; border-radius: 6px; padding: 8px 10px; min-width: 90px; }
+.kpi-label { font-size: 7.5px; color: #4D555F; text-transform: uppercase; letter-spacing: .04em; }
+.kpi-val   { font-family: 'Montserrat', Arial, sans-serif; font-weight: 700; font-size: 14px; }
+.over-flag { font-size: 8.5px; color: #B45309; background: #FEF3C7; border-radius: 4px; padding: 4px 8px; }
+
+.group      { margin-bottom: 10px; }
+.group-head { display: flex; align-items: baseline; gap: 6px; background: #F6F8FA;
+                padding: 5px 8px; border-radius: 4px 4px 0 0; break-after: avoid; }
+.group-name  { font-weight: 700; font-size: 10px; }
+.group-city  { font-size: 9px; color: #4D555F; }
+.group-count { margin-left: auto; font-size: 8.5px; color: #4D555F; }
+
+table { width: 100%; border-collapse: collapse; }
+thead { display: table-header-group; }
+th { text-align: left; font-size: 7.5px; text-transform: uppercase; letter-spacing: .04em;
+      color: #4D555F; border-bottom: 1px solid #DCE2E8; padding: 4px 6px; }
+td { font-size: 9px; padding: 4px 6px; border-bottom: 1px solid #F0F2F5; }
+td.mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 8.5px; }
+tr { break-inside: avoid; }
+a  { color: #0E7FA8; text-decoration: none; }
+.flag  { font-size: 7.5px; color: #B45309; background: #FEF3C7; border-radius: 3px; padding: 1px 5px; }
+.empty { font-size: 10px; color: #4D555F; padding: 12px; text-align: center; }

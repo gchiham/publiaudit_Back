@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <title>{{ ref }}</title>
+  <style>{% include "report_pdf.css" %}</style>
+</head>
+<body>
+  <div class="footer-left">{{ ref }}{% if generated_date %} · {{ generated_date }}{% endif %}</div>
+  <div class="footer-qr"><img src="{{ qr_data_uri }}"></div>
+
+  <header class="head">
+    {% if logo_url %}
+      <img class="logo" src="{{ logo_url }}">
+    {% else %}
+      <div class="logo logo-fallback">{{ client_initial }}</div>
+    {% endif %}
+    <div>
+      <div class="eyebrow">{{ L.kind }}</div>
+      <div class="client">{{ client_name }}</div>
+      {% if provider_name %}
+        <div class="issuer">{{ L.issuedBy }} <strong>{{ provider_name }}</strong></div>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="campaign-block">
+    <span class="campaign-label">{{ L.campaign }}</span>
+    <span class="campaign-name">{{ campaign_display }}{% if ad_name %} · {{ ad_name }}{% endif %}</span>
+    <div class="meta">
+      {% for k, v in meta_items %}
+        <div class="meta-item"><span class="meta-k">{{ k }}</span><span class="meta-v">{{ v }}</span></div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if filters_active %}
+    <div class="note">{{ L.filteredNote }}</div>
+  {% endif %}
+  {% if capped_note %}
+    <div class="note note-warn">{{ capped_note }}</div>
+  {% endif %}
+
+  <section class="section">
+    <div class="section-title">{{ L.summaryTitle }}</div>
+    <div class="kpis">
+      {% for label, val in kpi_cards %}
+        <div class="kpi"><div class="kpi-label">{{ label }}</div><div class="kpi-val">{{ val }}</div></div>
+      {% endfor %}
+      {% if over_n_fmt %}
+        <div class="over-flag">{{ over_n_fmt }} {{ L.overAiring }}</div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">{{ L.libraryTitle }}</div>
+    {% if groups %}
+      {% for g in groups %}
+        <div class="group">
+          <div class="group-head">
+            <span class="group-name">{{ g.name }}</span>
+            <span class="group-city">{% if g.city %} · {{ g.city }}{% endif %}</span>
+            <span class="group-count">{{ g.count_fmt }} {{ L.airings }}</span>
+          </div>
+          <table>
+            <thead><tr>
+              <th>{{ L.colDate }}</th><th>{{ L.colTime }}</th><th>{{ L.colAd }}</th>
+              <th>{{ L.colCampaign }}</th><th>{{ L.colEvd }}</th><th></th>
+            </tr></thead>
+            <tbody>
+              {% for d in g.detections %}
+                <tr>
+                  <td>{{ d.date_str }}</td>
+                  <td class="mono">{{ d.time_str }}</td>
+                  <td>{{ d.ad_name }}</td>
+                  <td>{{ d.campaign_name }}</td>
+                  <td class="mono"><a href="{{ public_base_url }}/{{ token }}?evidence={{ d.evd }}">{{ d.evd }}</a></td>
+                  <td>{% if d.over_airing %}<span class="flag">{{ L.overAiring }}</span>{% endif %}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty">{{ L.noResults }}</div>
+    {% endif %}
+  </section>
+</body>
+</html>
