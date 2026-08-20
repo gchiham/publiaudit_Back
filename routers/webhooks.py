@@ -63,14 +63,14 @@ async def clerk_webhook(request: Request):
                          email      = COALESCE(%s, email),
                          full_name  = COALESCE(%s, full_name),
                          avatar_url = COALESCE(%s, avatar_url),
-                         role       = %s,
+                         role       = COALESCE(%s, role),
                          tenant_id  = COALESCE(%s::uuid, tenant_id)
                        WHERE clerk_user_id = %s""",
                     (
                         emails[0]['email_address'] if emails else None,
                         f'{fname} {lname}'.strip() or None,
                         data.get('image_url'),
-                        meta.get('role', 'viewer'),
+                        meta.get('role'),
                         meta.get('tenant_id'),
                         data['id'],
                     )
