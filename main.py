@@ -32,9 +32,17 @@ app = FastAPI(
     openapi_url='/api/openapi.json',
 )
 
-# CORS — orígenes desde env var CORS_ORIGINS (CSV), fallback permisivo para dev local
-_cors_origins_env = os.environ.get('CORS_ORIGINS', '*')
-_cors_origins = [o.strip() for o in _cors_origins_env.split(',') if o.strip()] if _cors_origins_env != '*' else ['*']
+# CORS — orígenes desde env var CORS_ORIGINS (CSV). Sin credentials, '*' es seguro;
+# con allow_credentials=True (como acá) el navegador nunca manda credenciales a un
+# origen wildcard, PERO Starlette refleja el Origin real del request en ese caso,
+# lo que anula la protección. Por eso el fallback NO es '*': son los orígenes
+# productivos conocidos, para que quedar sin CORS_ORIGINS seteada en el entorno
+# nunca abra la API a cualquier sitio.
+_cors_origins_env = os.environ.get(
+    'CORS_ORIGINS',
+    'https://app.publiaudit.com,https://report.publiaudit.com',
+)
+_cors_origins = [o.strip() for o in _cors_origins_env.split(',') if o.strip()]
 
 app.add_middleware(
     CORSMiddleware,
